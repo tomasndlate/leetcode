@@ -1,7 +1,4 @@
 class MinStack:
-    
-    # [(-2, -inf), (0, -2)]
-    # -2
 
     def __init__(self):
         self._stack = []
