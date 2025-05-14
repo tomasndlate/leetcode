@@ -1,4 +1,4 @@
-from collections import Counter, defaultdict
+from collections import defaultdict
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
         s1_count = defaultdict(int)
