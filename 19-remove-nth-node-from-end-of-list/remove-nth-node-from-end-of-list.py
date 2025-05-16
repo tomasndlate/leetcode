@@ -14,7 +14,7 @@ class Solution:
 
         # traverse until previous node
         curr = head
-        for _ in range(1, i - n):
+        for _ in range(1, i - n): # start in 1, cause 0 doesn't count
             curr = curr.next
         
         # remove node
