@@ -8,9 +8,8 @@ class Solution:
         """
         Do not return anything, modify head in-place instead.
         """
-        # find mid
-        slow = head
-        fast = head
+        # find middle (slow will stack behind mid)
+        slow, fast = head, head
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
@@ -19,7 +18,6 @@ class Solution:
         second = slow.next
         slow.next = None
         prev = None
-        
         while second:
             nexttemp = second.next
             second.next = prev
@@ -28,8 +26,6 @@ class Solution:
 
         # merge linked lists
         l1, l2 = head, prev
-        
-        # code here
         while l2:
             temp_l1, temp_l2 = l1.next, l2.next
 
