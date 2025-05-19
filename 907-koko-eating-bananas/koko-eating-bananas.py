@@ -5,7 +5,7 @@ class Solution:
         res = maxk
 
         while mink <= maxk:
-        #for k in range(mink, maxk+1):
+            
             k = (mink + maxk) // 2
             hours = sum( (p // k) + min(p % k, 1) for p in piles )
 
