@@ -3,7 +3,6 @@ class Solution:
         rowi, rowj = 0, len(matrix) - 1
 
         while rowi <= rowj:
-
             rowmid = (rowj + rowi) // 2
 
             if matrix[rowmid][0] > target:
