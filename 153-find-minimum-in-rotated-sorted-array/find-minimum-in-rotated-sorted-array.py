@@ -4,17 +4,14 @@ class Solution:
         res = float('inf')
 
         while l <= r:
-            if nums[l] < nums[r]: # all section sorted
-                return min(res, nums[l])
-
             mid = (l + r) // 2
             res = min(res, nums[mid])
-
             if nums[l] > nums[mid]: # rotated on left
                 r = mid - 1
-            else: # rotated on right
+            elif nums[r] < nums[mid]: # rotated on right
                 l = mid + 1
-                
+            else: # all sorted
+                return min(res, nums[l])
         
         return res
         
