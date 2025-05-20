@@ -6,6 +6,7 @@ class Solution:
         while l <= r:
             mid = (l + r) // 2
             res = min(res, nums[mid])
+            
             if nums[l] > nums[mid]: # rotated on left
                 r = mid - 1
             elif nums[r] < nums[mid]: # rotated on right
