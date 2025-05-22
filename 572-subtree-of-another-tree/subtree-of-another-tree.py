@@ -12,14 +12,11 @@ class Solution:
         if self.isSameTree(root, subRoot): return True
 
         return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
-        
-    def isSameTree(self, r, subr):
+    
+    def isSameTree(self, r, subr) -> bool:
         if r == subr == None: return True
-        
-        if r and subr and r.val == subr.val:
-            return (
-                self.isSameTree(r.left, subr.left) 
-                and self.isSameTree(r.right, subr.right)
-                )
-        
+
+        if r and subr and r.val == subr.val: 
+            return self.isSameTree(r.left, subr.left) and self.isSameTree(r.right, subr.right)
+
         return False
