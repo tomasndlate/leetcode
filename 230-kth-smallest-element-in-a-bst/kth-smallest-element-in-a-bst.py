@@ -7,17 +7,22 @@ import heapq
 #         self.right = right
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        heap = []
-        queue = collections.deque()
-        queue.append(root)
+        visited = 0
+        res = 0
 
-        while queue:
-            node = queue.popleft()
-            if node:
-                heapq.heappush(heap, -node.val)
-                if len(heap) > k:
-                    heapq.heappop(heap)
-                queue.append(node.left)
-                queue.append(node.right)
-        
-        return -heapq.heappop(heap)
+        def dfs(node):
+            if not node: return
+            
+            dfs(node.left)
+
+            nonlocal visited
+            visited += 1
+            if visited == k:
+                nonlocal res
+                res = node.val
+                return
+                
+            dfs(node.right)
+
+        dfs(root)
+        return res
