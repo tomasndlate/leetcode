@@ -1,4 +1,3 @@
-import heapq
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -8,21 +7,20 @@ import heapq
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         visited = 0
-        res = 0
+        stack = []
+        cur = root
 
-        def dfs(node):
-            if not node: return
+        while cur or stack:
+            # explore left
+            while cur:
+                stack.append(cur)
+                cur = cur.left
             
-            dfs(node.left)
-
-            nonlocal visited
+            # process node
+            cur = stack.pop()
             visited += 1
             if visited == k:
-                nonlocal res
-                res = node.val
-                return
-                
-            dfs(node.right)
+                return cur.val
 
-        dfs(root)
-        return res
+            # go right
+            cur = cur.right
