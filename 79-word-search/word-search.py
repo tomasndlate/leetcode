@@ -4,16 +4,14 @@ class Solution:
         visited = [[False] * cols for _ in range(rows)]
 
         def dfs(row, col, i):
-            nonlocal rows, cols
-            if row < 0 or row >= rows or col < 0 or col >= cols: return False
-            if i == len(word): return False              # excess word max
-            if visited[row][col]: return False           # already visited
-            if board[row][col] != word[i]: return False  # different from word
-            
-            
+            if i == len(word): return True
 
-            # if last character, word is found
-            if i == len(word) - 1: return True
+            nonlocal rows, cols
+            if ( row < 0 or row >= rows 
+                or col < 0 or col >= cols
+                or visited[row][col]
+                or board[row][col] != word[i]):
+                return False
             
             visited[row][col] = True
             if (   dfs(row - 1, col, i+1) # up
@@ -32,7 +30,3 @@ class Solution:
                     return True
 
         return False
-        
-# ["C","A","A"]
-# ["A","A","A"]
-# ["B","C","D"]
