@@ -13,8 +13,7 @@ class Solution:
                 backtrack(i+1, path, total + candidates[i])
                 path.pop()
                 i += 1
-                while i < len(candidates) and candidates[i-1] == candidates[i]:
-                    i += 1
+                while i < len(candidates) and candidates[i-1] == candidates[i]: i += 1
 
         backtrack(0, [], 0)
         return res
