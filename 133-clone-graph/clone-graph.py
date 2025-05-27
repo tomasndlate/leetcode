@@ -10,29 +10,19 @@ from typing import Optional
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
         if not node: return None
-        hashmap = {}
-        # traverse and create hashmap with node -> newnode
+        clones = {}
         queue = collections.deque()
         queue.append(node)
-        while queue:
-            cur = queue.popleft()
-            if cur in hashmap: continue
-            hashmap[cur] = Node(cur.val)
-            for neigh in cur.neighbors:
-                if neigh not in hashmap:
-                    queue.append(neigh)
 
-        # traverse hasmap and add ref for each neighbor new node
-        visited = set()
-        queue.append(node)
         while queue:
             cur = queue.popleft()
-            if cur in visited: continue
-            visited.add(cur)
+            if cur not in clones:
+                clones[cur] = Node(cur.val)
             for neigh in cur.neighbors:
-                # add ref to new node
-                hashmap[cur].neighbors.append(hashmap[neigh])
-                queue.append(neigh)
-        
-        return hashmap[node]
+                if neigh not in clones:
+                    clones[neigh] = Node(neigh.val)
+                    queue.append(neigh)
+                clones[cur].neighbors.append(clones[neigh])
+
+        return clones[node]
         
