@@ -16,6 +16,7 @@ class Solution:
         queue.append(node)
         while queue:
             cur = queue.popleft()
+            if cur in hashmap: continue
             hashmap[cur] = Node(cur.val)
             for neigh in cur.neighbors:
                 if neigh not in hashmap:
@@ -31,8 +32,7 @@ class Solution:
             for neigh in cur.neighbors:
                 # add ref to new node
                 hashmap[cur].neighbors.append(hashmap[neigh])
-                if neigh not in visited:
-                    queue.append(neigh)
+                queue.append(neigh)
         
         return hashmap[node]
         
