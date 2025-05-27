@@ -11,7 +11,7 @@ class Solution:
 
             grid[row][col] = 0
 
-            return (1 
+            return (1 # cur is valid
                     + dfs(row - 1, col) 
                     + dfs(row + 1, col)
                     + dfs(row, col - 1)
