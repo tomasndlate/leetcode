@@ -23,13 +23,13 @@ class Solution:
         
         # traverse horizontal borders top/bottom - visit all "O"
         for c in range(cols):
-            if not visited[0][c]: dfs(0, c)
-            if not visited[rows-1][c]: dfs(rows-1, c)
+            if board[0][c] == "O" and not visited[0][c]: dfs(0, c)
+            if board[rows-1][c] == "O" and not visited[rows-1][c]: dfs(rows-1, c)
 
         # traverse vertical borders left/right - visit all "O"
         for r in range(rows):
-            if not visited[r][0]: dfs(r, 0)
-            if not visited[r][cols-1]: dfs(r, cols-1)
+            if board[r][0] == "O" and not visited[r][0]: dfs(r, 0)
+            if board[r][cols-1] == "O" and not visited[r][cols-1]: dfs(r, cols-1)
 
         # every "O" not visited change to "X"
         for r in range(rows):
