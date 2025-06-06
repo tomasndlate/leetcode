@@ -11,7 +11,7 @@ class Solution:
             count = 0
             while seq in uniqueNums:
                 count += 1
-                max_seq = max(max_seq, count)
                 seq += 1
+            max_seq = max(max_seq, count)
         
         return max_seq
