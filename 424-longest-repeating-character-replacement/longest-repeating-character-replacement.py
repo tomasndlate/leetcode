@@ -1,23 +1,21 @@
-from collections import defaultdict
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        count = defaultdict(int)
-        maxf, i = 0, 0
-        res = 0
+        # SLIDING WINDOW
+        current = collections.defaultdict(int)
+        left = 0
+        max_char = 0
+        max_length = 0
 
-        for j, c in enumerate(s):
-            count[c] += 1
-            maxf = max(maxf, count[c]) # freq of most freq value
+        for right in range(len(s)):
+            current[s[right]] += 1
+            max_char = max(max_char, current[s[right]])
+
+            while right - left + 1 - max_char > k:
+                current[s[left]] -= 1
+                max_char = max(max_char, current[s[left]])
+                left += 1
             
-            if j - i + 1 - maxf <= k: # valid
-                res = max(res, j - i + 1)
-            
-            while j - i + 1 - maxf > k: # invalid
-                count[s[i]] -= 1
-                i += 1
-                # maxf don't need to reduce - as to have 
-                # a higher res, maxf need to be this or higher
+            max_length = max(max_length, right - left + 1)
         
-        return res
-
+        return max_length
         
