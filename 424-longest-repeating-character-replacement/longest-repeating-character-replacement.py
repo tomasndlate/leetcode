@@ -12,7 +12,6 @@ class Solution:
 
             while right - left + 1 - max_char > k:
                 current[s[left]] -= 1
-                max_char = max(max_char, current[s[left]])
                 left += 1
             
             max_length = max(max_length, right - left + 1)
