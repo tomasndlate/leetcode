@@ -5,13 +5,11 @@ class Solution:
 
         prefix = 1
         for i in range(n):
-            num = res[i]
             res[i] = prefix
             prefix *= nums[i]
         
         sufix = 1
         for i in range(n-1, -1, -1):
-            num = res[i]
             res[i] *= sufix
             sufix *= nums[i]
         
