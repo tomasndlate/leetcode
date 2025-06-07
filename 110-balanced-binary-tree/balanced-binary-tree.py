@@ -6,20 +6,20 @@
 #         self.right = right
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        
-        balanced = True
+        imbalanced = False
 
-        def dfs(curr):
-            if not curr: return 0
-            depthleft = dfs(curr.left)
-            depthright = dfs(curr.right)
-
-            if abs(depthleft - depthright) > 1:
-                nonlocal balanced
-                balanced = False
+        def dfs_depth(node):
+            nonlocal imbalanced
+            if not node: return 0
             
-            return 1 + max(depthleft, depthright)
+            left = dfs_depth(node.left)
+            right = dfs_depth(node.right)
+
+            if abs(left - right) > 1:
+                imbalanced = True
+            
+            return 1 + max(left, right)
         
-        dfs(root)
-        return balanced
-        
+        dfs_depth(root)
+        return not imbalanced
+            
