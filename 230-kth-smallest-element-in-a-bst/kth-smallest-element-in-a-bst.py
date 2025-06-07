@@ -6,21 +6,20 @@
 #         self.right = right
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        visited = 0
-        stack = []
-        cur = root
+        # DFS - KEEP TRACK OF NUMBER OF VISITED
+        count = 0
+        found = False
+        value = 0
 
-        while cur or stack:
-            # explore left
-            while cur:
-                stack.append(cur)
-                cur = cur.left
-            
-            # process node
-            cur = stack.pop()
-            visited += 1
-            if visited == k:
-                return cur.val
-
-            # go right
-            cur = cur.right
+        def dfs(node):
+            nonlocal count, value, found
+            if not node or found: return
+            dfs(node.left)
+            count += 1
+            if count == k:
+                value = node.val
+            dfs(node.right)
+        
+        dfs(root)
+        return value
+        
