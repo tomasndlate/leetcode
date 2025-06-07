@@ -8,33 +8,32 @@ class Solution:
         """
         Do not return anything, modify head in-place instead.
         """
-        # find middle (slow will stack behind mid)
-        slow, fast = head, head
+        # LINKED LIST
+        dummy = ListNode(next=head)
+
+        # Find middle
+        slow, fast = dummy, dummy
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
 
-        # reverse 2nd half
-        second = slow.next
-        slow.next = None
+        # Revert pointer to point back (slow is the last of 1st half)
+        cur = slow.next
         prev = None
-        while second:
-            nexttemp = second.next
-            second.next = prev
-            prev = second
-            second = nexttemp
-
-        # merge linked lists
+        slow.next = None
+        while cur:
+            temp = cur.next
+            cur.next = prev
+            prev = cur
+            cur = temp
+        
+        # Merge both lists
         l1, l2 = head, prev
-        while l2:
-            temp_l1, temp_l2 = l1.next, l2.next
-
-            l2.next = temp_l1
+        while l1 and l2:
+            temp1, temp2 = l1.next, l2.next
             l1.next = l2
-
-            l2 = temp_l2
-            l1 = l1.next.next
-
-
+            l2.next = temp1
+            l1, l2 = temp1, temp2
+        
         return head
         
