@@ -8,9 +8,9 @@ class Solution:
             res[i] = prefix
             prefix *= nums[i]
         
-        sufix = 1
+        suffix = 1
         for i in range(n-1, -1, -1):
-            res[i] *= sufix
-            sufix *= nums[i]
+            res[i] *= suffix
+            suffix *= nums[i]
         
         return res
