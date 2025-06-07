@@ -4,11 +4,14 @@ class Solution:
         res = []
 
         def dfs(start, path, total):
-            if total == target: res.append(path[:]); return
-            if total > target: return
+            if total == target:
+                res.append(path[:])
+                return
+            if total > target:
+                return
             
             for i in range(start, len(candidates)):
-                if i > start and candidates[i-1] == candidates[i]:
+                if i > start and candidates[i] == candidates[i-1]:
                     continue
                 path.append(candidates[i])
                 dfs(i+1, path, total + candidates[i])
