@@ -28,7 +28,7 @@ class Solution:
             cur = temp
         
         # Merge both lists
-        l1, l2 = head, prev
+        l1, l2 = head, prev # prev contains last value 2nd list
         while l1 and l2:
             temp1, temp2 = l1.next, l2.next
             l1.next = l2
