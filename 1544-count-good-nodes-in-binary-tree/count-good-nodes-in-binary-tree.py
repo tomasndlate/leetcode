@@ -7,18 +7,15 @@
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
 
-        def dfs(node:TreeNode, prev:int) -> int:
-            if not node: return 0
-            res = 0
-            
-            if node.val >= prev:
-                res += 1
-                prev = node.val
+        if not root: return 0
 
-            res += dfs(node.left, prev)
-            res += dfs(node.right, prev)
-            return res
+        def dfs(node, threshold):
+            if not node:
+                return 0
+            if node.val < threshold: # not valid
+                return dfs(node.left, threshold) + dfs(node.right, threshold)
+                
+            return 1 + dfs(node.left, node.val) + dfs(node.right, node.val)
         
-        return dfs(root, float('-inf'))
-
+        return dfs(root, root.val)
         
