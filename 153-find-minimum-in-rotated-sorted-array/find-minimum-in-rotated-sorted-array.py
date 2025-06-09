@@ -1,18 +1,19 @@
 class Solution:
     def findMin(self, nums: List[int]) -> int:
-        l, r = 0, len(nums) - 1
-        res = float('inf')
+        # BINARY SEARCH
+        if not nums: return -1
 
-        while l <= r:
-            mid = (l + r) // 2
-            res = min(res, nums[mid])
-            
-            if nums[l] > nums[mid]: # rotated on left
-                r = mid - 1
-            elif nums[r] < nums[mid]: # rotated on right
-                l = mid + 1
-            else: # all sorted
-                return min(res, nums[l])
+        left, right = 0, len(nums) - 1
         
-        return res
+        # while not sorted
+        while nums[left] > nums[right]:
+            mid = (left + right) // 2
+            # sorted left, send to right rotate side
+            if nums[left] <= nums[mid]:
+                left = mid + 1
+            # if sorted right, send to left rotate side
+            else:
+                right = mid
+
+        return nums[left]
         
