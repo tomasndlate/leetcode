@@ -13,7 +13,7 @@ class Solution:
 
             return cache[i]
         
-        return dfs(1) + dfs(2)
+        return dfs(0)
 
         # BOTTOM-UP: TABULATION
         
