@@ -1,29 +1,25 @@
 class Solution:
     def numDecodings(self, s: str) -> int:
         # TOP-DOWN: RECURSION + MEMOIZATION
+        n = len(s)
         cache = {}
 
-        def dfs(i, j):
-            if (i,j) in cache:
-                return cache[(i,j)]
+        def dfs(i):
+            if i in cache: return cache[i]
 
-            # Over length of string
-            if j >= len(s):
-                return 0
-            
-            num = s[i:j+1]
-            # minumum # maximum # first digit 0
-            if int(num) < 1 or int(num) > 26 or num != str(int(num)):
-                #cache[(i,j)] = 0
-                return 0 #cache[(i,j)]
+            # reach final
+            if i >= n: return 1
 
-            # Reach final digit
-            if j == len(s) - 1:
-                #cache[(i,j)] = 1
-                return 1
-            
-            cache[(i,j)] = dfs(j+1, j+1) + dfs(j+1, j+2)
-                
-            return cache[(i,j)]
+            if s[i] == '0': return 0
+
+            # 1 DIGIT (valid)
+            res = dfs(i+1) # send 1 digit after
+
+            # 2 DIGIT (check if valid)
+            if i + 1 < n and 1 <= int(s[i:i+2]) and int(s[i:i+2]) <= 26:
+                res += dfs(i+2) # send 2 digit after
+
+            cache[i] = res
+            return cache[i]
         
-        return dfs(0, 0) + dfs(0, 1)
+        return dfs(0)
