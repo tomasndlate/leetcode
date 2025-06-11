@@ -12,17 +12,15 @@ class Solution:
                 return 0
             
             num = s[i:j+1]
-            if (   int(num) < 1         # minumum
-                or int(num) > 26        # maximum
-                or num != str(int(num)) # first digit 0
-            ):
-                cache[(i,j)] = 0
-                return cache[(i,j)]
+            # minumum # maximum # first digit 0
+            if int(num) < 1 or int(num) > 26 or num != str(int(num)):
+                #cache[(i,j)] = 0
+                return 0 #cache[(i,j)]
 
             # Reach final digit
             if j == len(s) - 1:
-                cache[(i,j)] = 1
-                return cache[(i,j)]
+                #cache[(i,j)] = 1
+                return 1
             
             cache[(i,j)] = dfs(j+1, j+1) + dfs(j+1, j+2)
                 
