@@ -7,9 +7,7 @@ class Solution:
         def dfs(i):
             if i in cache: return cache[i]
 
-            # reach final
             if i >= n: return 1
-
             if s[i] == '0': return 0
 
             # 1 DIGIT (valid)
