@@ -9,14 +9,14 @@ class Solution:
 
         time = 0
         while heap or queue:
-            if queue and time > queue[0][1]:
+            if queue and time >= queue[0][1]:
                 numTask = queue.popleft()[0]
                 heapq.heappush(heap, -numTask)
             
             if heap:
                 numTask = (-heapq.heappop(heap)) - 1
                 if numTask > 0:
-                    queue.append((numTask, time + n))
+                    queue.append((numTask, time + n + 1))
             
             time += 1
         
