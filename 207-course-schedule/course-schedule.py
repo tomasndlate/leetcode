@@ -8,7 +8,7 @@ class Solution:
 
         visited = set()
         visiting = set()
-        def hasCycle(c):
+        def detectCycle(c):
             if c in visiting:
                 return True
             if c in visited or c not in requisites:
@@ -16,14 +16,15 @@ class Solution:
             
             visiting.add(c)
             for req in requisites[c]:
-                if hasCycle(req):
+                if detectCycle(req):
                     return True
             visiting.remove(c)
             visited.add(c)
             return False
         
         for req in range(numCourses):
-            if hasCycle(req):
+            if detectCycle(req):
                 return False
+                
         return True
             
