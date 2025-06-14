@@ -9,4 +9,4 @@ class Solution:
             if len(heap) > k:
                 heapq.heappop(heap)
         
-        return [ heapq.heappop(heap)[1] for _ in range(k) ]
+        return [ value for freq, value in heap ]
