@@ -2,27 +2,34 @@ from collections import Counter
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
         # SLIDING WINDOW
-        s_count = Counter()
-        t_count = Counter(t)
+        if not s or not t: return ""
+        window, t_count = {}, {}
+        for c in t:
+            t_count[c] = 1 + t_count.get(c, 0)
         
-        left = right = None
+        have, need = 0, len(t_count)
+        res, resLen = (None, None), float('inf')
 
-        i = 0
-        for j in range(len(s)):
-            if s[j] in t_count:
-                s_count[s[j]] += 1
-                if all(t_count[key] <= s_count[key] for key in t_count):
-                    if left == None: # first time
-                        left, right = i, j
-                    if j - i < right - left: # smaller
-                        left, right = i, j
-                    s_count[s[i]] -= 1
-                    i += 1
-            # shrink window
-            while i <= j and ( s[i] not in t_count or s_count[s[i]] > t_count[s[i]] ):
-                if s[i] in s_count:
-                    s_count[s[i]] -= 1
-                i += 1
-                
-        return s[left:right+1] if left != None else ""
+        left = 0
+        for right in range(len(s)):
+            c = s[right]
+            window[c] = 1 + window.get(c, 0)
+            if c in t_count and window[c] == t_count[c]:
+                have += 1
+            
+            while have == need:
+                # compare minimum window
+                if right - left + 1 < resLen:
+                    res = (left, right)
+                    resLen = right - left + 1
+
+                # shrink window
+                window[s[left]] -= 1
+                if s[left] in t_count and window[s[left]] < t_count[s[left]]:
+                    have -= 1
+                left += 1
+            
+        return s[res[0]:res[1]+1] if resLen != float('inf') else ""
+
+        
                  
