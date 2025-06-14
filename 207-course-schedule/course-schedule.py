@@ -1,29 +1,29 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        dependencies = {}
-
-        for course, pre in prerequisites:
-            if course not in dependencies:
-                dependencies[course] = []
-            dependencies[course].append(pre)
+        requisites = {} # course: [requisites]
+        for course, req in prerequisites:
+            if course not in requisites:
+                requisites[course] = []
+            requisites[course].append(req)
 
         visited = set()
         visiting = set()
-        def valid(course):
-            if course in visiting: return False
-            if course in visited: return True
+        def hasCycle(c):
+            if c in visiting:
+                return True
+            if c in visited or c not in requisites:
+                return False
             
-            visiting.add(course)
-
-            for pre in dependencies.get(course, []):
-                if not valid(pre):
-                    return False
-            
-            visiting.remove(course)
-            visited.add(course)
-            return True
+            visiting.add(c)
+            for req in requisites[c]:
+                if hasCycle(req):
+                    return True
+            visiting.remove(c)
+            visited.add(c)
+            return False
         
-        for course in range(numCourses):
-            if not valid(course): return False
-
+        for req in range(numCourses):
+            if hasCycle(req):
+                return False
         return True
+            
