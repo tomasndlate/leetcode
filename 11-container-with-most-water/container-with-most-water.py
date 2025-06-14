@@ -6,6 +6,7 @@ class Solution:
         
         max_area = 0
         while left < right:
+            # area = width * height
             area = (right - left) * min(height[left], height[right])
             max_area = max(max_area, area)
 
