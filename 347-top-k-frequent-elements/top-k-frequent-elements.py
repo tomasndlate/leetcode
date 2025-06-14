@@ -1,14 +1,12 @@
-from collections import defaultdict
+from collections import Counter
 import heapq
-
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        count = defaultdict(int)
-        for n in nums:
-            count[n] += 1
-
+        frequencies = Counter(nums)
         heap = []
-        for n, freq in count.items():
-            heapq.heappush(heap, (-freq, n))
+        for n, freq in frequencies.items():
+            heapq.heappush(heap, (freq, n))
+            if len(heap) > k:
+                heapq.heappop(heap)
         
         return [ heapq.heappop(heap)[1] for _ in range(k) ]
