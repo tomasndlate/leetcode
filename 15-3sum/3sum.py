@@ -5,13 +5,13 @@ class Solution:
         res = []
 
         for i in range(n - 2):
-            if i > 0 and nums[i] == nums[i-1]:
-                continue
+            if i > 0 and nums[i] == nums[i-1]: continue
             j, k = i + 1, n - 1
             while j < k:
-                if nums[i] + nums[j] + nums[k] < 0:
+                total = nums[i] + nums[j] + nums[k]
+                if total < 0:
                     j += 1
-                elif nums[i] + nums[j] + nums[k] > 0:
+                elif total > 0:
                     k -= 1
                 else:
                     res.append([nums[i], nums[j], nums[k]])
