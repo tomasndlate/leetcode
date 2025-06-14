@@ -8,7 +8,9 @@ class Solution:
         res = []
         
         for symbol, value in reversed(symbols):
-            res.append(symbol * (num // value))
+            count = num // value
+            if count:
+                res.append(symbol * count)
             num = num % value
         
         return "".join(res)
