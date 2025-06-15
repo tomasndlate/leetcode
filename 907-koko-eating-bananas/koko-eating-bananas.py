@@ -1,19 +1,24 @@
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        minK, maxK = 1, max(piles)
+        k = maxK
 
-        mink, maxk = 1, max(piles)
-        res = maxk
+        def canFinish(testK):
+            needHours = 0
+            for p in piles:
+                hours = p // testK
+                needHours += hours if p % testK == 0 else hours + 1
+            return needHours <= h
 
-        while mink <= maxk:
-            
-            k = (mink + maxk) // 2
-            hours = sum( (p // k) + min(p % k, 1) for p in piles )
-
-            if hours > h: # if necessary hours is high - increase k
-                mink = k + 1
-            else:
-                res = min(res, k)
-                maxk = k - 1
+        # binary search - for each k check if can finish
+        while minK <= maxK:
+            midK = (minK + maxK) // 2
+            if canFinish(midK): # reduce
+                k = midK
+                maxK = midK - 1
+            else: # try higher
+                minK = midK + 1
         
-        return res
-        
+        return k
+
+
