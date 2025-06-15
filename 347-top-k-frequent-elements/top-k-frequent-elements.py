@@ -5,10 +5,24 @@ class Solution:
         for n in nums:
             count[n] = count.get(n, 0) + 1
 
-        minHeap = []
+        # HEAP
+        #minHeap = []
+        #for n, freq in count.items():
+        #    heapq.heappush(minHeap, (freq, n))
+        #    if len(minHeap) > k:
+        #        heapq.heappop(minHeap)
+        #return [n for freq, n in minHeap]
+
+        # BUCKET SORT
+        buckets = [ [] for i in range(len(nums)+1) ]
         for n, freq in count.items():
-            heapq.heappush(minHeap, (freq, n))
-            if len(minHeap) > k:
-                heapq.heappop(minHeap)
+            buckets[freq].append(n)
         
-        return [n for freq, n in minHeap]
+        res = []
+        for numbers in reversed(buckets):
+            for n in numbers:
+                res.append(n)
+                if len(res) == k:
+                    return res
+        
+        return []
