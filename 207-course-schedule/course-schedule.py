@@ -1,30 +1,31 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        requisites = {} # course: [requisites]
-        for course, req in prerequisites:
-            if course not in requisites:
-                requisites[course] = []
-            requisites[course].append(req)
-
+        preMap = {} # course: [pre]
+        for course, pre in prerequisites:
+            if course not in preMap:
+                preMap[course] = []
+            preMap[course].append(pre)
+        
         visited = set()
         visiting = set()
-        def detectCycle(c):
-            if c in visiting:
+        def detectCycle(course):
+            if course in visiting:
                 return True
-            if c in visited or c not in requisites:
+            if course in visited:
                 return False
             
-            visiting.add(c)
-            for req in requisites[c]:
-                if detectCycle(req):
+            visiting.add(course)
+            for pre in preMap.get(course, []):
+                if detectCycle(pre):
                     return True
-            visiting.remove(c)
-            visited.add(c)
+
+            visiting.remove(course)
+            visited.add(course)
             return False
         
-        for req in range(numCourses):
-            if detectCycle(req):
+        # loop through courses, and check cycles
+        for c in range(numCourses):
+            if detectCycle(c):
                 return False
-                
+        
         return True
-            
