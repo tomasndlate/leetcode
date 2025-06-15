@@ -8,11 +8,11 @@ class Solution:
             if i >= len(nums):
                 return 0 # total stole
             
-            res1 = dfs(i+2) # 1 of interval
-            res2 = dfs(i+3) # 2 of interval
+            rob = nums[i] + dfs(i+2) # rob and skip 1
+            skip = dfs(i+1) # go to next
 
-            cache[i] = nums[i] + max(res1, res2)
+            cache[i] = max(rob, skip)
             return cache[i]
         
-        return max(dfs(0), dfs(1))
+        return dfs(0)
         # BOTTOM-UP
