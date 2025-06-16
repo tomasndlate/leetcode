@@ -1,20 +1,23 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        # SLIDING WINDOW
-        current = collections.defaultdict(int)
+        window = {}
+        windowLen = 0
+        most_repeated = 0
+
         left = 0
-        max_char = 0
-        max_length = 0
-
         for right in range(len(s)):
-            current[s[right]] += 1
-            max_char = max(max_char, current[s[right]])
+            window[s[right]] = window.get(s[right], 0) + 1
+            most_repeated = max(most_repeated, window[s[right]])
 
-            while right - left + 1 - max_char > k:
-                current[s[left]] -= 1
+            # shrink until valid (length - most repeated <= k)
+            while right - left + 1 - most_repeated > k:
+                window[s[left]] -= 1
                 left += 1
+                # don't need most repeated update - to be longer most repeated need to be same or higher
             
-            max_length = max(max_length, right - left + 1)
-        
-        return max_length
+            windowLen = max(windowLen, right - left + 1)
+
+        return windowLen
+            
+
         
