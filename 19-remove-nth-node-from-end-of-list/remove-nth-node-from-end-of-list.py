@@ -14,8 +14,9 @@ class Solution:
             second = second.next
         
         # Remove next of second
-        prev = second
-        second = second.next.next # skip remove
-        prev.next = second
+        second.next = second.next.next
+        #prev = second
+        #second = second.next.next # skip remove
+        #prev.next = second
         
         return dummy.next
