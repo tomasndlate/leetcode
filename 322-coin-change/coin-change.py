@@ -2,19 +2,22 @@ class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
         cache = {}
 
-        def dfs(total):
-            if total == 0:
+        def dfs(remaining):
+            if remaining in cache:
+                return cache[remaining]
+            if remaining == 0:
                 return 0
-            if total in cache:
-                return cache[total]
-            
-            res = float('inf')
-            for coin in coins:
-                if total - coin >= 0:
-                    res = min(res, 1 + dfs(total - coin))
-            
-            cache[total] = res
-            return res
 
-        minCoins = dfs(amount)
-        return minCoins if minCoins != float('inf') else -1
+            minCoins = amount + 1
+            for i in range(len(coins)):
+                if remaining - coins[i] >= 0:
+                    res = dfs(remaining - coins[i])
+                    #if res != -1:
+                    minCoins = min(minCoins, 1 + res)
+            
+            cache[remaining] = minCoins #if minCoins <= amount else -1
+            return cache[remaining]
+        
+        res = dfs(amount)
+        return res if res <= amount else -1
+            
