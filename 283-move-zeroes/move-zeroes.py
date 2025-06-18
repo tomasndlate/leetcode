@@ -3,9 +3,9 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        n = len(nums)
         zero = 0
-        for i in range(n):
+        
+        for i in range(len(nums)):
             if nums[i] == 0: continue
 
             while zero < i and nums[zero] != 0:
