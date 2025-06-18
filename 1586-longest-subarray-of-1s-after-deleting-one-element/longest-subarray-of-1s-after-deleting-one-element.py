@@ -15,6 +15,6 @@ class Solution:
                 left += 1
             
             # valid now
-            windowMax = max(windowMax, right - left)
+            windowMax = max(windowMax, right - left) # not +1 because one deletion mandatory
         
         return windowMax
