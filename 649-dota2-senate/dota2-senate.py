@@ -1,24 +1,24 @@
 from collections import defaultdict, deque
 class Solution:
     def predictPartyVictory(self, senate: str) -> str:
-        count = defaultdict(int)
+        alive = defaultdict(int)
         queue = deque()
         for s in senate:
-            count[s] += 1
+            alive[s] += 1
             queue.append(s)
         
         opposite = { "R":"D", "D":"R" }
-        exclude = defaultdict(int)
+        ban = defaultdict(int)
         
-        while count["R"] and count["D"]:
-            cur = queue.popleft()
+        while alive["R"] and alive["D"]:
+            senator = queue.popleft()
 
-            if exclude[cur]:
-                exclude[cur] -= 1
-                count[cur] -= 1
+            if ban[senator]:
+                ban[senator] -= 1
+                alive[senator] -= 1
             else:
-                exclude[opposite[cur]] += 1
-                queue.append(cur)
+                ban[opposite[senator]] += 1
+                queue.append(senator)
 
 
         mapping = { "R": "Radiant", "D": "Dire" }
