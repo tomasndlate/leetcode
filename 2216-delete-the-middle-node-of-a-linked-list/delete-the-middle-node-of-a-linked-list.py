@@ -11,10 +11,9 @@ class Solution:
         dummy = ListNode(next=head)
         slow = fast = dummy
 
-        while fast and fast.next:
+        while fast and fast.next and fast.next.next:
             fast = fast.next.next
-            if fast: # avoid odd list to pass middle
-                slow = slow.next
+            slow = slow.next
         
         slow.next = slow.next.next
         return dummy.next
