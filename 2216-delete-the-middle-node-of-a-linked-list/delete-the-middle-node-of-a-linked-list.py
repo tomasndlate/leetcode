@@ -8,12 +8,12 @@ class Solution:
         if not head or not head.next:
             return None
         
-        dummy = ListNode(next=head)
-        slow = fast = dummy
+        slow = head
+        fast = head.next.next
 
-        while fast and fast.next and fast.next.next:
+        while fast and fast.next:
             fast = fast.next.next
             slow = slow.next
         
         slow.next = slow.next.next
-        return dummy.next
+        return head
