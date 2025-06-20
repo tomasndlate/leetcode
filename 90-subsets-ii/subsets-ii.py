@@ -3,16 +3,16 @@ class Solution:
         res = []
         nums.sort()
 
-        def dfs(start, path):
+        def backtrack(start, path):
             res.append(path[:])
-            if start >= len(nums): return
 
             for i in range(start, len(nums)):
-                if i > start and nums[i-1] == nums[i]: continue
+                if i > start and nums[i] == nums[i-1]:
+                    continue
 
                 path.append(nums[i])
-                dfs(i+1, path[:])
+                backtrack(i + 1, path)
                 path.pop()
-            
-        dfs(0, [])
+        
+        backtrack(0, [])
         return res
