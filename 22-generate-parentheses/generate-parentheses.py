@@ -3,6 +3,9 @@ class Solution:
         res = []
 
         def backtrack(path, opening, closing):
+            if closing == n:
+                res.append("".join(path))
+                
             if opening < n:
                 path.append("(")
                 backtrack(path, opening + 1, closing)
@@ -13,8 +16,6 @@ class Solution:
                 backtrack(path, opening, closing + 1)
                 path.pop()
             
-            if closing == n:
-                res.append("".join(path))
 
         backtrack([], 0, 0)
         return res
