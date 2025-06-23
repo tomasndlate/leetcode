@@ -1,13 +1,15 @@
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
-        sumMap = defaultdict(int)
-        sumMap[0] = 1 # total 0 happen if no subarray
+        prefixSumCount = defaultdict(int)
+        prefixSumCount[0] = 1
         prefixSum = 0
         count = 0
 
         for num in nums:
             prefixSum += num
-            count += sumMap[prefixSum - k]
-            sumMap[prefixSum] += 1
+            prefix = prefixSum - k
+            
+            count += prefixSumCount[prefix]
+            prefixSumCount[prefixSum] += 1
         
         return count
