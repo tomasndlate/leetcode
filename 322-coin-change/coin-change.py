@@ -1,23 +1,23 @@
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        cache = {}
+        memo = {}
+        coins.sort()
 
-        def dfs(remaining):
-            if remaining in cache:
-                return cache[remaining]
+        def dp(remaining):
+            if remaining in memo:
+                return memo[remaining]
             if remaining == 0:
                 return 0
+            if remaining < 0:
+                return -1
 
-            minCoins = amount + 1
-            for i in range(len(coins)):
-                if remaining - coins[i] >= 0:
-                    res = dfs(remaining - coins[i])
-                    #if res != -1:
-                    minCoins = min(minCoins, 1 + res)
-            
-            cache[remaining] = minCoins #if minCoins <= amount else -1
-            return cache[remaining]
-        
-        res = dfs(amount)
-        return res if res <= amount else -1
-            
+            min_coins = float('inf')
+            for coin in reversed(coins):
+                res = dp(remaining - coin)
+                if res >= 0:
+                    min_coins = min(min_coins, 1 + res)
+                    
+            memo[remaining] = min_coins if min_coins < float('inf') else -1
+            return memo[remaining]
+
+        return dp(amount)
