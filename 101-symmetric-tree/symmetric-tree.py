@@ -9,12 +9,13 @@ class Solution:
         if not root:
             return True
         
-        def dfs(node1, node2):
-            if not node1 and not node2:
+        def dfs(root1, root2):
+            if not root1 and not root2:
                 return True
-            if not node1 or not node2 or node1.val != node2.val:
+            if not root1 or not root2 or root1.val != root2.val:
                 return False
             
-            return dfs(node1.left, node2.right) and dfs(node1.right, node2.left)
+            return dfs(root1.left, root2.right) and dfs(root1.right, root2.left)
         
         return dfs(root.left, root.right)
+            
