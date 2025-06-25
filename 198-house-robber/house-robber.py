@@ -1,18 +1,18 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        # TOP-DOWN
-        cache = {}
-        def dfs(i):
-            if i in cache:
-                return cache[i]
-            if i >= len(nums):
-                return 0 # total stole
-            
-            rob = nums[i] + dfs(i+2) # rob and skip 1
-            skip = dfs(i+1) # go to next
+        memo = {}
 
-            cache[i] = max(rob, skip)
-            return cache[i]
+        def dp(i):
+            if i in memo:
+                return memo[i]
+
+            if i >= len(nums):
+                return 0
+            
+            rob = nums[i] + dp(i+2)
+            skip = dp(i+1)
+
+            memo[i] = max(rob, skip)
+            return memo[i]
         
-        return dfs(0)
-        # BOTTOM-UP
+        return dp(0)
