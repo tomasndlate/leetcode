@@ -1,21 +1,13 @@
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        # DP
-        # TOP-DOWN: RECURSION + MEMOIZATION
-        cache = {}
-        def dfs(i):
-            if i in cache:
-                return cache[i]
-            
-            max_depth = 1
-            for next_i in range(i + 1, len(nums)):
-                if nums[next_i] > nums[i]: # valid
-                    max_depth = max(max_depth, 1 + dfs(next_i))
-            
-            cache[i] = max_depth
-            return cache[i]
+        n = len(nums)
+        dp = [1] * n
+
+        for i in range(n-1, -1, -1):
+            for j in range(i+1, n):
+                if nums[i] < nums[j]: # valid
+                    dp[i] = max(dp[i], 1 + dp[j])
         
-        return max( dfs(i) for i in range(len(nums)) )
+        return max(dp)
 
-
-        # BOTTOM-UP: TABULATION
+        
