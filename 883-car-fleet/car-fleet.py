@@ -7,14 +7,13 @@ class Solution:
         cars = [ (p, (target - p) / s) for p, s in zip(position, speed) ] # (position, time)
         cars.sort(key=lambda x: x[0], reverse=True)
         
-        TIME_IDX = 1
-        fleets = 1
-        fleet_time = cars[0][TIME_IDX] # initiate with first car time to reach
+        fleets = 0
+        fleet_time = 0.0 # initiate with first car time to reach
 
-        for car in cars[1:]:
+        for _, time in cars:
             # if time to reach higher than fleet, new fleet
-            if car[TIME_IDX] > fleet_time:
-                fleet_time = car[TIME_IDX]
+            if time > fleet_time:
+                fleet_time = time
                 fleets += 1
         
         return fleets
