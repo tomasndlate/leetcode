@@ -5,29 +5,19 @@ class Solution:
         windowSum = 0
         window = defaultdict(int)
 
-        # initialise window
-        for i in range(k):
-            windowSum += nums[i]
-            window[nums[i]] += 1
-
-        # first window edge case
-        if len(window) == k:
-            maxWindowSum = windowSum
-
-        for i in range(k, len(nums)):
-            first = nums[i] 
-            last = nums[i - k]
-
-            # remove last
-            windowSum -= last
-            window[last] -= 1
-            if window[last] == 0:
-                del window[last]
-
-            # add first
+        for i, first in enumerate(nums):
+            
             windowSum += first
             window[first] += 1
-            if len(window) == k:
+
+            if i >= k: # shrink last element (constant size)
+                last = nums[i - k]
+                windowSum -= last
+                window[last] -= 1
+                if window[last] == 0:
+                    del window[last]
+
+            if len(window) == k: # distinct elements subarray
                 maxWindowSum = max(maxWindowSum, windowSum)
         
         return maxWindowSum
