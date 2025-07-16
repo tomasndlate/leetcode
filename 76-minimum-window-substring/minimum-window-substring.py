@@ -28,4 +28,4 @@ class Solution:
                         curReq -= 1
                     left += 1
         
-        return s[start:end+1] if start != None else ""
+        return s[start:end+1] if start is not None else ""
