@@ -8,7 +8,7 @@ class Solution:
             A, B = B, A
         
         LENGTH = len(A) + len(B)
-        HALF = LENGTH // 2
+        HALF = LENGTH // 2 # median index
 
         # operate on A
         left, right = 0, len(A)
