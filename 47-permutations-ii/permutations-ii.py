@@ -5,6 +5,7 @@ class Solution:
         def backtrack(start):
             if start == len(nums):
                 res.append(nums[:])
+                return
 
             seen = set()
 
