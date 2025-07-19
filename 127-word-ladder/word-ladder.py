@@ -1,6 +1,7 @@
 from collections import defaultdict, deque
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+
         letters = defaultdict(set) # index: [possible letters]
         for word in wordList:
             for i, letter in enumerate(word):
@@ -10,13 +11,16 @@ class Solution:
         words = set(wordList)
         words.add(beginWord)
 
+        if endWord not in words:
+            return 0
+
         queue = deque([ (beginWord, 1) ])
         
         while queue:
             word, numTransform = queue.popleft()
-            
-            # Not a word, or Already search these word
-            if word not in words or word in seen:
+
+            # Already search these word or Not a word
+            if word in seen or word not in words:
                 continue
             
             seen.add(word)
