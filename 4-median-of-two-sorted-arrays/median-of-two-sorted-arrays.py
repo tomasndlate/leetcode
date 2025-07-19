@@ -1,36 +1,41 @@
 class Solution:
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
-        A = nums1
-        B = nums2
-
-        # make sure A contain smaller array
-        if len(nums2) < len(nums1):
+        # min length array in A, and max length array on B (guarantee safe boundaries)
+        # find what index is median
+        # partition A in half, and complete total left partition with elements of B
+        # if partition is valid (all elements are part of left) return median
+        # else, move A left partition to left or right, depending on condition
+        # loop again
+        A, B = nums1, nums2
+        if len(A) > len(B):
             A, B = B, A
         
-        LENGTH = len(A) + len(B)
-        HALF = LENGTH // 2 # median index
+        total = len(A) + len(B)
+        half = total // 2
 
-        # operate on A
-        left, right = 0, len(A)
-        while True:
-            midA = (left + right) // 2
-            midB = HALF - midA
+        leftA, rightA = 0, len(A)
+        while leftA <= rightA:
+            partitionA = (leftA + rightA) // 2
+            partitionB = half - partitionA
 
-            Aleft = A[midA - 1] if midA > 0 else float('-inf')
-            Bleft = B[midB - 1] if midB > 0 else float('-inf')
+            Aleft = A[partitionA - 1] if partitionA > 0 else float('-inf')
+            Bleft = B[partitionB - 1] if partitionB > 0 else float('-inf')
 
-            Aright = A[midA] if midA < len(A) else float('inf')
-            Bright = B[midB] if midB < len(B) else float('inf')
+            Aright = A[partitionA] if partitionA < len(A) else float('inf')
+            Bright = B[partitionB] if partitionB < len(B) else float('inf')
 
-            if Aleft <= Bright and Bleft <= Aright: # valid
+            # if partition is correct
+            if Aleft <= Bright and Bleft <= Aright:
                 # odd
-                if LENGTH % 2:
+                if total % 2:
                     return min(Aright, Bright)
                 # even
                 return (max(Aleft, Bleft) + min(Aright, Bright)) / 2
-            
-            elif Aleft > Bright: # part A too big, need decrease
-                right = midA - 1
-            else: # part A too small, need increase
-                left = midA + 1
 
+            # not correct partition
+            if Aleft <= Bright: # bigger Aleft
+                leftA = partitionA + 1
+            else:
+                rightA = partitionA - 1
+
+        return 0.0
