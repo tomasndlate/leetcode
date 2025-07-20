@@ -1,18 +1,8 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        memo = {}
-
-        def dp(i):
-            if i in memo:
-                return memo[i]
-
-            if i >= len(nums):
-                return 0
-            
-            rob = nums[i] + dp(i+2)
-            skip = dp(i+1)
-
-            memo[i] = max(rob, skip)
-            return memo[i]
         
-        return dp(0)
+        house1, house2 = 0, 0
+        for num in nums:
+            house1, house2 = house2, max(house1 + num, house2)
+        
+        return max(house1, house2)
