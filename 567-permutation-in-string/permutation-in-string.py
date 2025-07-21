@@ -1,28 +1,28 @@
+from collections import Counter, defaultdict
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        permMap = {}
-        for s in s1:
-            permMap[s] = permMap.get(s, 0) + 1
-        
-        window = {}
-        have, need = 0, len(permMap)
+        substring = Counter(s1)
+        have, need = 0, len(substring)
+        window = defaultdict(int)
 
         left = 0
-        for right in range(len(s2)):
-            window[s2[right]] = window.get(s2[right], 0) + 1
-            if s2[right] in permMap and window[s2[right]] == permMap[s2[right]]:
+        for right, c in enumerate(s2):
+            window[c] += 1
+            if c in substring and window[c] == substring[c]:
                 have += 1
             
-            while have == need:
-                if right - left + 1 == len(s1):
-                    return True
-
-                # shrink
-                window[s2[left]] -= 1
-                if s2[left] in permMap and window[s2[left]] < permMap[s2[left]]:
+            # only when reach fix window size
+            if right - left + 1 > len(s1):
+                # move window
+                if s2[left] in substring and window[s2[left]] == substring[s2[left]]:
                     have -= 1
+                window[s2[left]] -= 1
                 left += 1
-            
-        return False
 
+            # valid window
+            if have == need:
+                return True
         
+        return False
+                
+
