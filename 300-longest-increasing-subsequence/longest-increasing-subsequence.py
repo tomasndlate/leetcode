@@ -1,14 +1,13 @@
-from bisect import bisect_left
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        sub = []
+        n = len(nums)
+        dp = [1] * n
+        lis = 1
 
-        for num in nums:
-            i = bisect_left(sub, num)
-            if i == len(sub):
-                sub.append(num)
-            else:
-                sub[i] = num
-        
-        return len(sub)
-        
+        for cur in range(n):
+            for prev in range(cur):
+                if nums[cur] > nums[prev]:
+                    dp[cur] = max(dp[cur], 1 + dp[prev])
+                    lis = max(lis, dp[cur])
+
+        return lis
