@@ -10,10 +10,7 @@ class Solution:
         lca = None
 
         def findLCA(node) -> bool:
-            nonlocal lca
             if not node:
-                return False
-            if lca:
                 return False
             
             itself = node == p or node == q
@@ -21,6 +18,7 @@ class Solution:
             right = findLCA(node.right)
 
             if itself + left + right >= 2:
+                nonlocal lca
                 lca = node
             return itself or left or right
         
