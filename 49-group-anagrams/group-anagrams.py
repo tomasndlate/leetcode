@@ -2,7 +2,9 @@ from collections import defaultdict
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         anagrams = defaultdict(list)
-        for s in strs:
-            key = tuple(sorted(s))
-            anagrams[key].append(s)
+
+        for word in strs:
+            key = "".join(sorted(word))
+            anagrams[key].append(word)
+        
         return list(anagrams.values())
