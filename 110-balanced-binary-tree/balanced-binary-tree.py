@@ -10,7 +10,7 @@ class Solution:
 
         def depth(node) -> int:
             nonlocal balanced
-            if not node:
+            if not node or not balanced:
                 return 0
             
             left = depth(node.left)
