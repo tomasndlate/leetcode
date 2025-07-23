@@ -9,7 +9,7 @@ class Trie:
             if letter not in node.children:
                 node.children[letter] = Node()
             node = node.children[letter]
-        node.children["*"] = None # ending word
+        node.isWord = True # ending word
 
 
     def search(self, word: str) -> bool: # exact word
@@ -18,7 +18,7 @@ class Trie:
             if letter not in node.children:
                 return False
             node = node.children[letter]
-        return "*" in node.children # ending word ?
+        return node.isWord # ending word ?
         
 
     def startsWith(self, prefix: str) -> bool:
@@ -32,6 +32,7 @@ class Trie:
 class Node:
     def __init__(self):
         self.children = {}
+        self.isWord = False
 
 # Your Trie object will be instantiated and called as such:
 # obj = Trie()
