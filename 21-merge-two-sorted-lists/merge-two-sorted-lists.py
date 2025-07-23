@@ -11,12 +11,11 @@ class Solution:
         while list1 and list2:
             if list1.val < list2.val:
                 cur.next = list1
-                cur = cur.next
                 list1 = list1.next
             else:
                 cur.next = list2
-                cur = cur.next
                 list2 = list2.next
+            cur = cur.next
         
         if not list1:
             cur.next = list2
