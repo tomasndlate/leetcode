@@ -7,22 +7,22 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        
-        self.res = None
+        lca = None
 
-        def dfs(node):
+        def findLCA(node) -> bool:
+            nonlocal lca
             if not node:
                 return False
-
-            itself = node == p or node == q
-            left = dfs(node.left)
-            right = dfs(node.right)
-
-            # if is lowest (2 need to be true)
-            if itself + left + right >= 2:
-                self.res = node
             
-            return left or right or itself
+            itself = node == p or node == q
+            left = findLCA(node.left)
+            right = findLCA(node.right)
+
+            if itself + left + right >= 2:
+                lca = node
+                return True
+            
+            return itself or left or right
         
-        dfs(root)
-        return self.res
+        findLCA(root)
+        return lca
