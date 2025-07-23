@@ -13,6 +13,8 @@ class Solution:
             nonlocal lca
             if not node:
                 return False
+            if lca:
+                return False
             
             itself = node == p or node == q
             left = findLCA(node.left)
@@ -20,8 +22,6 @@ class Solution:
 
             if itself + left + right >= 2:
                 lca = node
-                return True
-            
             return itself or left or right
         
         findLCA(root)
