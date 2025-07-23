@@ -8,18 +8,18 @@ class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
         balanced = True
 
-        def dfs_depth(node):
+        def depth(node) -> int:
             nonlocal balanced
-            if not node: return 0
+            if not node:
+                return 0
             
-            left = dfs_depth(node.left)
-            right = dfs_depth(node.right)
+            left = depth(node.left)
+            right = depth(node.right)
 
             if abs(left - right) > 1:
                 balanced = False
-            
+
             return 1 + max(left, right)
         
-        dfs_depth(root)
+        depth(root)
         return balanced
-            
