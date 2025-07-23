@@ -5,7 +5,7 @@ class Solution:
             return []
         if image[sr][sc] == color:
             return image
-        #res = image[:]
+            
         rows, cols = len(image), len(image[0])
         directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         
