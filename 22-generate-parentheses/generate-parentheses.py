@@ -1,21 +1,22 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
+        
         res = []
 
-        def backtrack(path, opening, closing):
-            if closing == n:
-                res.append("".join(path))
-                
-            if opening < n:
+        def backtrack(opening, closing, path):
+
+            if opening <= n: # add open
                 path.append("(")
-                backtrack(path, opening + 1, closing)
+                backtrack(opening + 1, closing, path)
                 path.pop()
 
-            if closing < opening:
+            if closing < opening: # add close
                 path.append(")")
-                backtrack(path, opening, closing + 1)
+                backtrack(opening, closing + 1, path)
                 path.pop()
-            
 
-        backtrack([], 0, 0)
+            if opening == closing == n: # append
+                res.append("".join(path))
+        
+        backtrack(0, 0, [])
         return res
