@@ -7,8 +7,7 @@ class Solution:
             nodes[node].append((dest, time))
 
         # bfs start in k
-        minHeap = [ (0, k) ] # (curTime, index)
-        heapq.heapify(minHeap) 
+        minHeap = [(0, k)] # (curTime, index)
         visited = set() # indexes
         maxTime = float('-inf')
 
