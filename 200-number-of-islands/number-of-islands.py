@@ -7,9 +7,9 @@ class Solution:
 
             grid[row][col] = "0"
 
-            for x, y in directions:
-                r = row + y
-                c = col + x
+            for dr, dc in directions:
+                r = row + dr
+                c = col + dc
                 if (    0 <= r < rows
                     and 0 <= c < cols
                     and grid[r][c] == "1"):
