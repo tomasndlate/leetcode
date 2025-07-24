@@ -2,32 +2,37 @@ import heapq
 class MedianFinder:
 
     def __init__(self):
-        self.left = [] # max heap
-        self.right = [] # min heap
+        self.leftHeap = []   # maxHeap
+        self.rightHeap = []  # minHeap
 
     def addNum(self, num: int) -> None:
-        # new num left part
-        if not self.left or -self.left[0] >= num: 
-            heapq.heappush(self.left, -num)
-        # new num right part
-        else: 
-            heapq.heappush(self.right, num)
+        # 3 in ( [1] [2] ) go right
+        # ( [1] [2,3] ) -> ( [1,2] [3] )
+        if not self.rightHeap or num < self.rightHeap[0]:
+            heapq.heappush(self.leftHeap, -num)
+        else:
+            heapq.heappush(self.rightHeap, num)
 
-        if len(self.left) - len(self.right) > 1: # left is overload
-            move = heapq.heappop(self.left)
-            heapq.heappush(self.right, -move)
-        elif len(self.right) - len(self.left) > 0: # right is overload
-            move = heapq.heappop(self.right)
-            heapq.heappush(self.left, -move)
+        # want always left to be equals or higher length
+        if len(self.leftHeap) > len(self.rightHeap) + 1: # swap to right
+            element = -heapq.heappop(self.leftHeap)
+            heapq.heappush(self.rightHeap, element)
+
+        if len(self.rightHeap) > len(self.leftHeap): # swap to left
+            element = heapq.heappop(self.rightHeap)
+            heapq.heappush(self.leftHeap, -element)
+
+        
 
     def findMedian(self) -> float:
-        total = len(self.left) + len(self.right)
+        length = len(self.leftHeap) + len(self.rightHeap)
         # odd
-        if total % 2:
-            return float(-self.left[0])
+        if length % 2:
+            return float(-self.leftHeap[0])
         # even
         else:
-            return (-self.left[0] + self.right[0]) / 2
+            return (-self.leftHeap[0] + self.rightHeap[0]) / 2
+        
 
 
 # Your MedianFinder object will be instantiated and called as such:
