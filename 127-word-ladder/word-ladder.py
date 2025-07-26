@@ -1,41 +1,39 @@
-from collections import defaultdict, deque
+from collections import deque, defaultdict
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-
-        letters = defaultdict(set) # index: [possible letters]
-        for word in wordList:
-            for i, letter in enumerate(word):
-                letters[i].add(letter)
-
-        seen = set() # word: numTransform
         words = set(wordList)
-        words.add(beginWord)
 
         if endWord not in words:
             return 0
 
-        queue = deque([ (beginWord, 1) ])
-        
+        letters = defaultdict(set)
+        for word in words:
+            for i, c in enumerate(word):
+                letters[i].add(c)
+
+        queue = deque([beginWord])
+        visited = set([beginWord])
+        transformations = 1
         while queue:
-            word, numTransform = queue.popleft()
+            length = len(queue)
 
-            # Already search these word or Not a word
-            if word in seen or word not in words:
-                continue
-            
-            seen.add(word)
+            for _ in range(length):
+                word = queue.popleft()
 
-            # Found same word
-            if word == endWord:
-                return numTransform
-            
-            wordArray = list(word)
-            for i, curLetter in enumerate(word):
-                for newLetter in letters[i]:
-                    if curLetter != newLetter:
-                        wordArray[i] = newLetter
-                        queue.append(("".join(wordArray), numTransform + 1))
-                        wordArray[i] = curLetter
+                if word == endWord:
+                    return transformations
 
-        #dfs(list(beginWord), 1)
+                editWord = list(word)
+                for i in range(len(word)):
+                    temp = editWord[i]
+                    for c in letters[i]:
+                        editWord[i] = c
+                        newWord = "".join(editWord)
+                        if newWord in words and newWord not in visited:
+                            visited.add(newWord)
+                            queue.append(newWord)
+                    editWord[i] = temp
+
+            transformations += 1
+        
         return 0
