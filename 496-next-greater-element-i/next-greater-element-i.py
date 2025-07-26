@@ -1,18 +1,18 @@
 class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        stack = []
+        nums2Map = { num: i for i, num in enumerate(nums2) }
         nextGreater = [-1] * len(nums2)
+        stack = []
 
-        for i in range(len(nums2) - 1, -1, -1):
-            while stack and stack[-1] <= nums2[i]:
+        for num in reversed(nums2):
+            while stack and stack[-1] <= num:
                 stack.pop()
             if stack:
-                nextGreater[i] = stack[-1]
-            stack.append(nums2[i])
+                nextGreater[nums2Map[num]] = stack[-1]
+            stack.append(num)
 
         res = [-1] * len(nums1)
         for i, num in enumerate(nums1):
-            index = nums2.index(num)
-            res[i] = nextGreater[index]
+            res[i] = nextGreater[nums2Map[num]]
         
         return res
