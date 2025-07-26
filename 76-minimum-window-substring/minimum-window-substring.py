@@ -1,31 +1,36 @@
-from collections import Counter, defaultdict
+from collections import defaultdict
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        windowReq = Counter(t)
+        require = defaultdict(int)
+        for c in t:
+            require[c] += 1
+        
         window = defaultdict(int)
         minLength = float('inf')
-        start = end = None
-        curReq, needReq = 0, len(windowReq) # how many requisites need to match
+        indexes = (-1, -1)
+        have, need = 0, len(require)
 
         left = 0
-        for right, c in enumerate(s):
-
+        for right in range(len(s)):
             window[s[right]] += 1
 
-            # check if requisites match (exact match)
-            if s[right] in windowReq and window[s[right]] == windowReq[s[right]]:
-                curReq += 1
-                
-                # if curReq match needReq window is valid
-                while curReq == needReq:
-                    # update window if new min
-                    if right - left + 1 < minLength:
-                        minLength = right - left + 1
-                        start, end = left, right
-                    # shrink window
-                    window[s[left]] -= 1
-                    if s[left] in windowReq and window[s[left]] < windowReq[s[left]]:
-                        curReq -= 1
-                    left += 1
+            # if meet require
+            if s[right] in require and window[s[right]] == require[s[right]]:
+                have += 1
+            
+            # while valid
+            while have == need:
+                # update minimum
+                if right - left + 1 < minLength:
+                    minLength = right - left + 1
+                    indexes = (left, right)
+
+                # shrink
+                if s[left] in require and window[s[left]] == require[s[left]]:
+                    have -= 1
+                window[s[left]] -= 1
+                left += 1
         
-        return s[start:end+1] if start is not None else ""
+        return s[indexes[0]:indexes[1]+1] if minLength != float('inf') else ""
+            
+        
