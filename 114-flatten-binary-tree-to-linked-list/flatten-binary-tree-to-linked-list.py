@@ -13,23 +13,19 @@ class Solution:
         def dfs(node): # TreeNode
             if not node:
                 return None
-            if not node.left and not node.right:
-                return node
 
-            flatLeft = dfs(node.left)
+            leftTail = dfs(node.left)
+            rightTail = dfs(node.right)
 
-            if flatLeft:
-                flatLeft.left, flatLeft.right = None, node.right
-                node.left, node.right = None, node.left
+            if leftTail:
+                leftTail.right = node.right
+                node.right = node.left
+                node.left = None
 
-                right = flatLeft.right
+            if rightTail: return rightTail
+            if leftTail: return leftTail
+            return node
 
-            else:
-                right = node.right
-            
-            flatRight = dfs(right)
-
-            return flatRight if flatRight else flatLeft
         
         dfs(root)
         return root
