@@ -4,18 +4,21 @@ class Solution:
         memo = {}
 
         def dp(remaining):
-            if remaining in memo: return memo[remaining]
-            if remaining < 0: return -1
-            if remaining == 0: return 0
-            
-            usedCoins = amount + 1
+            if remaining in memo:
+                return memo[remaining]
+            if remaining == 0:
+                return 0
+            if remaining < 0:
+                return -1
+
+            usedCoins = float('inf')
             for coin in coins:
                 otherCoins = dp(remaining - coin)
-                if otherCoins == -1: # impossible to reach
+                if otherCoins == -1:
                     continue
                 usedCoins = min(usedCoins, 1 + otherCoins)
-
-            memo[remaining] = usedCoins if usedCoins <= amount else -1
+            
+            memo[remaining] = usedCoins if usedCoins != float('inf') else -1
             return memo[remaining]
         
         return dp(amount)
