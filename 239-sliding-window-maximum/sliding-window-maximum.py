@@ -2,23 +2,22 @@ from collections import deque
 import heapq
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        window = deque()
-        maxHeap = [] # (-num, index)
-
+        queue = deque() # index
         res = []
         
-        for i, num in enumerate(nums):
-            window.append(num)
-            heapq.heappush(maxHeap, (-num, i))
-
-            if len(window) > k:
-                window.popleft()
-
-                while maxHeap[0][1] < (i - k) + 1:
-                    heapq.heappop(maxHeap)
+        left = 0
+        for right in range(len(nums)):
+            # pop smaller values from queue
+            while queue and nums[queue[-1]] < nums[right]:
+                queue.pop()
+            queue.append(right)
             
-            if len(window) == k:
-                maxValue = - maxHeap[0][0]
-                res.append(maxValue)
+            # remove out of bounds indexes
+            while queue and queue[0] < left:
+                queue.popleft()
+
+            if (right - left + 1) == k:
+                res.append(nums[queue[0]])
+                left += 1
         
         return res
