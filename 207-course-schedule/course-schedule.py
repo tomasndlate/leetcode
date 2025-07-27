@@ -20,6 +20,7 @@ class Solution:
                         return True
             visiting.remove(course)
             visited.add(course)
+            return False
         
         for course in graph.keys():
             if course not in visited and isCycle(course):
