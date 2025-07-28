@@ -1,19 +1,22 @@
 class Solution:
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
-        start, end = 0, 1
+        
         res = []
+        newStart, newEnd = newInterval
 
         for i, interval in enumerate(intervals):
-            # before interval    
-            if newInterval[end] < interval[start]:
-                res.append(newInterval)
-                return res + intervals[i:]
-            # new goes after
-            elif newInterval[start] > interval[end]:
-                res.append(interval)
-            # overlap
+            start, end = interval
+            # interval before new interval
+            if end < newStart:
+                res.append(intervals[i])
+            # interval after new interval
+            elif newEnd < start:
+                res += [[newStart, newEnd]] + intervals[i:]
+                return res
+            # interval overlap new interval
             else:
-                newInterval = [min(newInterval[start], interval[start]), max(newInterval[end], interval[end])]
+                newStart = min(start, newStart)
+                newEnd = max(end, newEnd)
         
-        res.append(newInterval)
+        res.append([newStart, newEnd])
         return res
