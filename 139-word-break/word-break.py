@@ -15,7 +15,8 @@ class Solution:
             for i in range(start, len(s)):
                 if s[start:i+1] in words:
                     if dp(i+1):
-                        return True
+                        memo[start] = True
+                        return memo[start]
             
             memo[start] = False
             return memo[start]
