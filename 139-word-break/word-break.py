@@ -1,20 +1,23 @@
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        
         words = set(wordDict)
-        cache = {}
+        memo = {}
 
-        def dfs(i):
-            if i in cache:
-                return cache[i]
-            if i >= len(s):
+        def dp(start):
+            if start in memo:
+                return memo[start]
+
+            if start == len(s):
                 return True
 
-            for j in range(i, len(s)):
-                if s[i:j+1] in words and dfs(j+1): # subword found
-                    cache[i] = True
-                    return True
-
-            cache[i] = False
-            return False
+            # possibilities starting at start
+            for i in range(start, len(s)):
+                if s[start:i+1] in words:
+                    if dp(i+1):
+                        return True
+            
+            memo[start] = False
+            return memo[start]
         
-        return dfs(0)
+        return dp(0)
