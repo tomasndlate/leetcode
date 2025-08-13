@@ -1,24 +1,22 @@
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        memo = {}
+        cache = {}
 
         def dp(remaining):
-            if remaining in memo:
-                return memo[remaining]
+            if remaining in cache:
+                return cache[remaining]
             if remaining == 0:
                 return 0
             if remaining < 0:
                 return -1
 
-            usedCoins = float('inf')
+            min_coins = float('inf')
             for coin in coins:
-                otherCoins = dp(remaining - coin)
-                if otherCoins == -1:
-                    continue
-                usedCoins = min(usedCoins, 1 + otherCoins)
+                used = dp(remaining - coin)
+                if used > -1:
+                    min_coins = min(min_coins, used + 1)
             
-            memo[remaining] = usedCoins if usedCoins != float('inf') else -1
-            return memo[remaining]
-        
+            cache[remaining] = min_coins if min_coins != float('inf') else -1
+            return cache[remaining]
+
         return dp(amount)
-                
