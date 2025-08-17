@@ -1,19 +1,19 @@
 class Solution:
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
-        m = len(text1)
-        n = len(text2)
-        dp = [ [0] * (m + 1) for _ in range(n + 1) ]
         #   a b c d e .
         # a 3 2 2 1 1 0
         # c 2 2 2 1 1 0
         # e 1 1 1 1 1 0
         # . 0 0 0 0 0 0
+        len1 = len(text1)
+        len2 = len(text2)
+        dp = [ [0] * (len2 + 1) for _ in range(len1 + 1) ]
 
-        for r in reversed(range(n)):
-            for c in reversed(range(m)):
-                if text1[c] == text2[r]:
+        for r in reversed(range(len1)):
+            for c in reversed(range(len2)):
+                if text1[r] == text2[c]:
                     dp[r][c] = 1 + dp[r+1][c+1]
                 else:
-                    dp[r][c] = max(dp[r][c+1], dp[r+1][c])
-                    
+                    dp[r][c] = max(dp[r+1][c], dp[r][c+1])
+
         return dp[0][0]
