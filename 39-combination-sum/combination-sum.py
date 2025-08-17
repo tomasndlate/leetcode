@@ -1,12 +1,14 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        candidates.sort()
         res = []
 
         def backtrack(start, path, pathSum):
             if pathSum == target:
                 res.append(path[:])
                 return
-            if pathSum > target:
+
+            if start == len(candidates) or pathSum > target:
                 return
             
             for i in range(start, len(candidates)):
