@@ -1,22 +1,16 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
         
-        def maxRob(houses):
-            house1 = house2 = 0
+        def helper(houses):
+            prev1 = 0
+            prev2 = 0
 
             for house in houses:
-                robHouse = house + house1
-                skipHouse = house2
-
-                house1, house2 = house2, max(robHouse, skipHouse)
+                prev1, prev2 = prev2, max(prev1 + house, prev2)
             
-            return house2
+            return prev2
         
-        if not nums:
-            return 0
-
         if len(nums) == 1:
             return nums[0]
         
-        return max(maxRob(nums[1:]), maxRob(nums[:-1]))
-        
+        return max(helper(nums[1:]), helper(nums[:-1]))
