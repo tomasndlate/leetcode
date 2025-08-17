@@ -1,23 +1,22 @@
 from collections import deque
-import heapq
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        queue = deque() # index
         res = []
-        
-        left = 0
-        for right in range(len(nums)):
-            # pop smaller values from queue
-            while queue and nums[queue[-1]] < nums[right]:
-                queue.pop()
-            queue.append(right)
-            
-            # remove out of bounds indexes
-            while queue and queue[0] < left:
-                queue.popleft()
+        window = deque()
+        #left = 0
+        for i, num in enumerate(nums):
 
-            if (right - left + 1) == k:
-                res.append(nums[queue[0]])
-                left += 1
+            # pop smaller numbers
+            while window and nums[window[-1]] < num:
+                window.pop()
+            window.append(i)
+
+            # remove index no longer within window
+            while window and i - window[0] + 1 > k:
+                window.popleft()
+            
+            # window is in fixed size
+            if i + 1 >= k:
+                res.append(nums[window[0]])
         
         return res
