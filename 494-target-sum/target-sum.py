@@ -1,20 +1,21 @@
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        
         cache = {}
-
-        def dp(i, curSum):
-            if (i, curSum) in cache:
-                return cache[((i, curSum))]
-
+        
+        def dp(i, total):
             if i == len(nums):
-                return 1 if curSum == target else 0
+                return 1 if total == target else 0
+            if (i, total) in cache:
+                return cache[(i, total)]
             
-            negative = dp(i + 1, curSum - nums[i])
-            positive = dp(i + 1, curSum + nums[i])
+            # Possible Ways
+            negative = dp(i + 1, total - nums[i])
+            positive = dp(i + 1, total + nums[i])
 
-            cache[((i, curSum))] = negative + positive
-            return cache[((i, curSum))]
-
+            cache[(i, total)] = negative + positive
+            return cache[(i, total)]
         
         return dp(0, 0)
+
+
+            
