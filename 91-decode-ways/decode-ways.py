@@ -1,23 +1,23 @@
 class Solution:
     def numDecodings(self, s: str) -> int:
-        # TOP-DOWN: RECURSION + MEMOIZATION
-        n = len(s)
         cache = {}
 
-        def dfs(i):
-            if i in cache: return cache[i]
+        def dp(i):
+            if i == len(s):
+                return 1
+            if s[i] == "0":
+                return 0
+            if i in cache:
+                return cache[i]
+            
+            # One digit always valid - it's not zero
+            oneDigit = dp(i+1)
+            # Two digit valid [10, 26]
+            twoDigit = 0
+            if i < len(s) - 1 and 10 <= int(s[i:i+2]) <= 26:
+                twoDigit = dp(i+2)
 
-            if i >= n: return 1
-            if s[i] == '0': return 0
-
-            # 1 DIGIT (valid)
-            res = dfs(i+1) # send 1 digit after
-
-            # 2 DIGIT (check if valid)
-            if i + 1 < n and 1 <= int(s[i:i+2]) and int(s[i:i+2]) <= 26:
-                res += dfs(i+2) # send 2 digit after
-
-            cache[i] = res
+            cache[i] = oneDigit + twoDigit
             return cache[i]
         
-        return dfs(0)
+        return dp(0)
