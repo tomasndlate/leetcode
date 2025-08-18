@@ -1,19 +1,15 @@
-from collections import deque
 class Solution:
     def jump(self, nums: List[int]) -> int:
         
+        left = right = 0
         jumps = 0
-        left, right = 0, 0
 
-        while left <= right:
-            if right >= len(nums) - 1:
-                return jumps
-
-            farthest = left
+        while right < len(nums) - 1:
+            longest = 0
             for i in range(left, right + 1):
-                farthest = max(farthest, i + nums[i])
-
-            left, right = right + 1, farthest
+                longest = max(longest, i + nums[i])
+            left = right + 1
+            right = longest
             jumps += 1
         
-        return 0
+        return jumps
