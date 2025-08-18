@@ -4,7 +4,7 @@ class Solution:
         left = right = 0
         jumps = 0
 
-        while right < len(nums) - 1:
+        while right < len(nums) - 1: # while not in last position
             longest = 0
             for i in range(left, right + 1):
                 longest = max(longest, i + nums[i])
