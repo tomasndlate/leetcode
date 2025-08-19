@@ -5,10 +5,10 @@ class Solution:
         removed = 0
 
         for start, end in intervals:
-            if start < prevEnd:
-                removed += 1
+            if start < prevEnd: # overlap
                 prevEnd = min(prevEnd, end)
+                removed += 1
             else:
                 prevEnd = end
-        
-        return removed 
+
+        return removed
