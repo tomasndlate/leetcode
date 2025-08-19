@@ -5,14 +5,15 @@ class Solution:
         def backtrack(start):
             if start == len(nums):
                 res.append(nums[:])
-
+                return
+            
             duplicates = set()
             for i in range(start, len(nums)):
                 if nums[i] in duplicates:
                     continue
                 nums[start], nums[i] = nums[i], nums[start]
                 backtrack(start + 1)
-                nums[i], nums[start] = nums[start], nums[i]
+                nums[start], nums[i] = nums[i], nums[start]
                 duplicates.add(nums[i])
         
         backtrack(0)
