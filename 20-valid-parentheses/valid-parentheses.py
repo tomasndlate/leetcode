@@ -1,18 +1,15 @@
-class Solution(object):
-    def isValid(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
-        parentheses = {')':'(', ']':'[', '}':'{'}
+class Solution:
+    def isValid(self, s: str) -> bool:
+        parentheses = {')':'(', '}':'{', ']':'['}
         stack = []
 
-        for p in s:
-            if p in parentheses: # if closing
-                if not stack: return False
-                if stack[-1] != parentheses[p]: return False
-                stack.pop()
+        for c in s:
+            if c in parentheses: # closing
+                if stack and stack[-1] == parentheses[c]:
+                    stack.pop()
+                else:
+                    return False
             else:
-                stack.append(p)
+                stack.append(c)
         
         return True if not stack else False
